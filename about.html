@@ -32,15 +32,25 @@
         ul { list-style: none; }
 
         /* --- HEADER --- */
-        header { position: fixed; width: 100%; top: 0; z-index: 1000; padding: 15px 0; transition: 0.3s; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); }
-        .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+ header { 
+            position: fixed; 
+            width: 100%; 
+            top: 0; 
+            z-index: 1000; 
+            padding: 15px 0; 
+            transition: 0.3s; 
+            /* CHANGED: Dark background to make logo visible */
+            background: var(--text-dark); 
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1); 
+        }        .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
         nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo-img { height: 50px; width: auto; display: block; }
+        .logo-img { height: 80px; width: auto; display: block; }
         
         .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a { font-weight: 500; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; color: rgba(255,255,255,0.8);  text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary-orange); }
-        .btn-appoint { background-color: var(--text-dark); color: var(--white); padding: 15px 35px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.4s var(--easing); }
+        .btn-appoint { background-color: var(--white); color: var(--text-dark); padding: 15px 35px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.4s var(--easing); }
         .btn-appoint:hover { background-color: var(--primary-orange); transform: scale(1.05); }
 
         .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-dark); }

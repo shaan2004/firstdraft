@@ -21,18 +21,19 @@
             --easing: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* --- GLOBAL RESET --- */
-        html.lenis { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto; }
+        /* --- GLOBAL RESET & LENIS CSS --- */
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
         .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
         .lenis.lenis-stopped { overflow: hidden; }
-
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Manrope', sans-serif; 
             line-height: 1.6; color: var(--text-dark); background: var(--bg-off-white); 
             overflow-x: hidden;
+            width: 100%;
         }
 
         h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
@@ -45,20 +46,51 @@
         .preloader.hidden { transform: translateY(-100%); pointer-events: none; }
         .preloader-logo { color: white; font-size: 3.5rem; font-weight: 700; font-style: italic; }
 
-        /* --- HEADER --- */
-        header { position: fixed; width: 100%; top: 0; z-index: 1000; padding: 15px 0; transition: 0.3s; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); }
+        /* --- HEADER (UPDATED) --- */
+        header { 
+            position: fixed; 
+            width: 100%; 
+            top: 0; 
+            z-index: 1000; 
+            padding: 15px 0; 
+            transition: 0.3s; 
+            /* 1. Dark Background applied here */
+            background: var(--text-dark); 
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1); 
+        }
         .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
         nav { display: flex; justify-content: space-between; align-items: center; }
         
-        .logo-img { height: 60px; width: auto; display: block; object-fit: contain; }
+        .logo-img { height: 80px; width: auto; display: block; object-fit: contain; }
         
         .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a { font-weight: 500; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .nav-links a { 
+            font-weight: 500; 
+            font-size: 0.95rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            transition: color 0.3s; 
+            /* 2. Text Color changed to White for visibility */
+            color: rgba(255,255,255,0.8);
+        }
         .nav-links a:hover { color: var(--primary-orange); }
-        .btn-appoint { background-color: var(--text-dark); color: var(--white); padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.4s var(--easing); }
-        .btn-appoint:hover { background-color: var(--primary-orange); transform: scale(1.05); }
+        
+        /* 3. Button Colors Inverted (White Bg, Dark Text) */
+        .btn-appoint { 
+            background-color: var(--white); 
+            color: var(--text-dark); 
+            padding: 12px 30px; 
+            border-radius: 50px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            border: none; 
+            font-size: 0.9rem; 
+            transition: 0.4s var(--easing); 
+        }
+        .btn-appoint:hover { background-color: var(--primary-orange); color: var(--white); transform: scale(1.05); }
 
-        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-dark); }
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--white); }
 
         /* --- HERO --- */
         .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 0; }
@@ -200,7 +232,9 @@
             /* Header */
             .mobile-toggle { display: block; }
             .nav-links {
-                position: fixed; top: 80px; left: 0; width: 100%; background: white;
+                position: fixed; top: 80px; left: 0; width: 100%; 
+                /* 4. Mobile Menu Background Dark to match header */
+                background: var(--text-dark);
                 flex-direction: column; align-items: center; padding: 30px; 
                 box-shadow: 0 10px 20px rgba(0,0,0,0.05);
                 display: none; /* Hidden by default */
@@ -300,7 +334,7 @@
 
     <section class="hero" id="home">
         <div class="slider-container">
-            <div class="slide active" style="background-image: url('assets/2025-09-21 (1).webp');"></div>
+            <div class="slide active" style="background-image: url('assets/2025-09-21\ \(1\).webp');"></div>
             <div class="slide" style="background-image: url('assets/2025-09-21.webp');"></div>
             <div class="slide" style="background-image: url('assets/shapewellness.webp');"></div>
         </div>
@@ -373,12 +407,12 @@
                 </div>
             </div>
             <div class="clinical-track" id="clinicalTrack">
-                 <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/prp.png');"></div><div class="clinical-info"><h3>PRP Skin</h3><p>Natural skin rejuvenation using plasma.</p><span class="clinical-link">Learn More</span></div></div>
-                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/needling.png');"></div><div class="clinical-info"><h3>Micro Needling</h3><p>Boost collagen and smooth texture.</p><span class="clinical-link">Learn More</span></div></div>
-                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/whitening.png');"></div><div class="clinical-info"><h3>Skin Whitening</h3><p>Restore radiance and even tone.</p><span class="clinical-link">Learn More</span></div></div>
-                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/laser.png');"></div><div class="clinical-info"><h3>Laser Hair Removal</h3><p>Pain-free, long-lasting smoothness.</p><span class="clinical-link">Learn More</span></div></div>
-                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/acne.png');"></div><div class="clinical-info"><h3>Acne Treatment</h3><p>Clear skin and reduce scarring.</p><span class="clinical-link">Learn More</span></div></div>
-                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/body.png');"></div><div class="clinical-info"><h3>Body Contouring</h3><p>Non-invasive fat reduction and shaping.</p><span class="clinical-link">Learn More</span></div></div>
+                 <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/prp.png'); background-color:#eee;"></div><div class="clinical-info"><h3>PRP Skin</h3><p>Natural skin rejuvenation using plasma.</p><span class="clinical-link">Learn More</span></div></div>
+                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/needling.png'); background-color:#eee;"></div><div class="clinical-info"><h3>Micro Needling</h3><p>Boost collagen and smooth texture.</p><span class="clinical-link">Learn More</span></div></div>
+                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/whitening.png'); background-color:#eee;"></div><div class="clinical-info"><h3>Skin Whitening</h3><p>Restore radiance and even tone.</p><span class="clinical-link">Learn More</span></div></div>
+                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/laser.png'); background-color:#eee;"></div><div class="clinical-info"><h3>Laser Hair Removal</h3><p>Pain-free, long-lasting smoothness.</p><span class="clinical-link">Learn More</span></div></div>
+                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/acne.png'); background-color:#eee;"></div><div class="clinical-info"><h3>Acne Treatment</h3><p>Clear skin and reduce scarring.</p><span class="clinical-link">Learn More</span></div></div>
+                <div class="clinical-card"><div class="clinical-img" style="background-image: url('assets/body.png'); background-color:#eee;"></div><div class="clinical-info"><h3>Body Contouring</h3><p>Non-invasive fat reduction and shaping.</p><span class="clinical-link">Learn More</span></div></div>
             </div>
         </div> 
     </section>
@@ -439,9 +473,9 @@
                 <div>
                     <h4 style="margin-bottom:20px;">Menu</h4>
                     <div class="footer-links">
-                        <a href="index.html#home">Home</a>
+                        <a href="#home">Home</a>
                         <a href="experience.html">Experience</a>
-                        <a href="treatments.html">Treatments</a>
+                        <a href="#clinical">Treatments</a>
                         <a href="about.html">About Us</a>
                         <a href="contact.html">Contact</a>
                     </div>
@@ -469,6 +503,7 @@
             <div class="copyright">© 2026 Shape Wellness. All Rights Reserved.</div>
         </div>
     </footer>
+
     <div class="modal-overlay" id="bookingModal">
         <div class="modal-box">
             <span class="close-btn" onclick="closeModal()">×</span>
@@ -506,17 +541,26 @@
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script>
-        // Smooth Scroll
+        // --- 1. SMOOTH SCROLL INIT ---
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // Mobile Menu Toggle
+        // --- 2. PRELOADER FIX (Auto-remove after 1s even if images fail) ---
+        function removePreloader() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) preloader.classList.add('hidden');
+        }
+        // Try to remove on load
+        window.addEventListener('load', removePreloader);
+        // Fallback: Remove after 2 seconds regardless of load state
+        setTimeout(removePreloader, 1500);
+
+        // --- 3. UI LOGIC ---
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
         }
 
-        // SCROLL REVEAL CONFIGURATION
         const sr = ScrollReveal({
             origin: 'bottom',
             distance: '60px',
@@ -531,7 +575,6 @@
         sr.reveal('.journey-img-wrapper', { origin: 'right' });
         sr.reveal('.section-header, .section-title');
         
-        // CONDITIONAL REVEAL: Only animate horizontal cards on desktop (>900px)
         if (window.innerWidth > 900) {
             sr.reveal('.info-card', { interval: 100 });
             sr.reveal('.clinical-card', { interval: 100 });
@@ -540,47 +583,56 @@
         sr.reveal('.review-card-outline', { interval: 100 });
         sr.reveal('.footer-grid div', { interval: 100, origin: 'bottom', distance: '30px' });
 
-        // PAN EFFECT FUNCTION (Restricted to Desktop)
+        // --- 4. PAN EFFECT (Sanitized) ---
         function enablePanEffect(wrapperId, trackId) {
             const wrapper = document.getElementById(wrapperId);
             const track = document.getElementById(trackId);
             
-            if(wrapper && track) {
-                // Only run on larger screens
-                if (window.innerWidth > 900) {
-                    wrapper.addEventListener('mousemove', (e) => {
-                        const percentage = e.clientX / window.innerWidth;
-                        const maxScroll = track.scrollWidth - window.innerWidth + 150;
+            if(wrapper && track && window.innerWidth > 900) {
+                wrapper.addEventListener('mousemove', (e) => {
+                    const percentage = e.clientX / window.innerWidth;
+                    const maxScroll = track.scrollWidth - window.innerWidth + 150;
+                    // Ensure maxScroll isn't negative to prevent jumping
+                    if (maxScroll > 0) {
                         const x = percentage * maxScroll * -1;
                         track.style.transform = `translateX(${x}px)`;
-                    });
-                }
+                    }
+                });
             }
         }
 
         enablePanEffect('clinicalWrapper', 'clinicalTrack');
         enablePanEffect('signatureWrapper', 'signatureTrack');
 
-        // Parallax (Restricted to Desktop)
+        // --- 5. PARALLAX ---
         window.addEventListener('scroll', () => {
             const journeyImg = document.querySelector('.journey-img');
             const journeySection = document.querySelector('.journey');
-            if(journeySection && window.innerWidth > 900) {
+            if(journeySection && journeyImg && window.innerWidth > 900) {
                 const rect = journeySection.getBoundingClientRect();
-                if(rect.top < window.innerHeight && rect.bottom > 0) journeyImg.style.transform = `translateY(${(rect.top) * 0.15}px)`;
+                if(rect.top < window.innerHeight && rect.bottom > 0) {
+                    journeyImg.style.transform = `translateY(${(rect.top) * 0.15}px)`;
+                }
             }
         });
 
-        const slides = document.querySelectorAll('.slide'); let currentSlide = 0;
-        setInterval(() => { slides[currentSlide].classList.remove('active'); currentSlide = (currentSlide + 1) % slides.length; slides[currentSlide].classList.add('active'); }, 5000);
+        // --- 6. SLIDER & HEADER ---
+        const slides = document.querySelectorAll('.slide'); 
+        if (slides.length > 0) {
+            let currentSlide = 0;
+            setInterval(() => { 
+                slides[currentSlide].classList.remove('active'); 
+                currentSlide = (currentSlide + 1) % slides.length; 
+                slides[currentSlide].classList.add('active'); 
+            }, 5000);
+        }
         
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
             if(window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled');
         });
-        
-        window.onload = function() { setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); }, 1000); }
 
+        // --- 7. MODAL LOGIC ---
         function openModal() { document.getElementById('bookingModal').style.display = 'flex'; document.getElementById('modalFormSection').style.display = 'flex'; document.getElementById('successSection').style.display = 'none'; }
         function closeModal() { document.getElementById('bookingModal').style.display = 'none'; }
         function handleBooking(e) { 
