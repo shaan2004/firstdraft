@@ -137,11 +137,11 @@
             .mobile-toggle { display: block; }
             .nav-links {
                 position: fixed; top: 80px; left: 0; width: 100%; 
-                /* CHANGED: Background to dark so white text is visible */
+                /* CHANGED: Dark background for mobile menu to match header */
                 background: var(--text-dark); 
                 flex-direction: column; align-items: center; padding: 30px; 
-                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-                display: none;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+                display: none; /* Hidden by default */
             }
             .nav-links.active { display: flex; }
             .btn-appoint { display: none; }
