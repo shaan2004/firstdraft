@@ -36,35 +36,32 @@
         .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
         nav { display: flex; justify-content: space-between; align-items: center; }
         .logo-img { height: 50px; width: auto; display: block; }
-        .nav-links { display: flex; gap: 30px; }
+        
+        /* Desktop Nav */
+        .nav-links { display: flex; gap: 40px; align-items: center; }
         .nav-links a { font-weight: 500; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary-orange); }
-        .btn-appoint { background-color: var(--text-dark); color: var(--white); padding: 15px 35px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.4s var(--easing); }
+        
+        .btn-appoint { background-color: var(--text-dark); color: var(--white); padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.4s var(--easing); }
         .btn-appoint:hover { background-color: var(--primary-orange); transform: scale(1.05); }
 
-        /* --- ABOUT HERO --- */
+        /* Mobile Menu Toggle */
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-dark); }
+
+        /* --- HERO --- */
         .about-hero { padding: 180px 0 80px; text-align: center; }
         .hero-subtitle { font-size: 1rem; color: var(--primary-orange); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; display: block; margin-bottom: 20px; }
         .hero-title { font-size: 4.5rem; line-height: 1.1; margin-bottom: 30px; max-width: 900px; margin-left: auto; margin-right: auto; }
 
         /* --- CONTENT CARDS --- */
         .card-section { padding: 60px 0; }
-        
         .content-card {
-            background: var(--white);
-            border-radius: 30px;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            background: var(--white); border-radius: 30px; overflow: hidden;
+            display: grid; grid-template-columns: 1fr 1fr;
             box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-            border: 2px solid transparent; 
-            transition: transform 0.4s var(--easing), box-shadow 0.4s var(--easing), border-color 0.4s;
+            border: 2px solid transparent; transition: all 0.4s var(--easing);
         }
-        .content-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-            border-color: var(--primary-orange);
-        }
+        .content-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); border-color: var(--primary-orange); }
 
         .card-text { padding: 80px; display: flex; flex-direction: column; justify-content: center; }
         .card-title { font-size: 3rem; margin-bottom: 25px; line-height: 1.2; color: var(--text-dark); }
@@ -74,19 +71,18 @@
         .card-img { width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 1.2s var(--easing); }
         .content-card:hover .card-img { transform: scale(1.05); }
 
+        /* Reversed Layout for Desktop */
         .content-card.reversed { direction: rtl; }
         .content-card.reversed .card-text { direction: ltr; }
 
         .journey-graphic {
             position: relative; height: 100%; min-height: 500px;
-            display: flex; justify-content: center; align-items: center;
-            background: #E8CDB6;
+            display: flex; justify-content: center; align-items: center; background: #E8CDB6;
         }
         .journey-graphic h2 { font-size: 4rem; z-index: 2; position: relative; font-family: 'Manrope'; font-weight: 600; color: #5a4a3a; }
         .shadow-overlay {
             position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%) rotate(45deg);
-            width: 150px; height: 400px; background: rgba(0,0,0,0.1); filter: blur(20px);
-            z-index: 1; pointer-events: none;
+            width: 150px; height: 400px; background: rgba(0,0,0,0.1); filter: blur(20px); z-index: 1; pointer-events: none;
         }
 
         .btn-outline {
@@ -102,22 +98,45 @@
         .footer-links a:hover { color: var(--primary-orange); transform: translateX(5px); }
         .copyright { text-align: center; border-top: 1px solid #333; padding-top: 30px; color: #555; }
 
-        /* --- MOBILE OPTIMIZATION --- */
+        /* --- MOBILE RESPONSIVE STYLES --- */
         @media (max-width: 900px) {
             .container { padding: 0 20px; }
-            .nav-links { display: none; }
-            .btn-appoint { display: none; } /* Hide in nav */
-            .logo-img { height: 60px; }
             
-            .hero-title { font-size: 3rem; margin-bottom: 20px; }
+            /* Header & Nav */
+            .mobile-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 70px; left: 0; width: 100%; background: white;
+                flex-direction: column; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                display: none; /* Hidden by default */
+            }
+            .nav-links.active { display: flex; }
+            .btn-appoint { display: none; } /* Hide button in header, rely on page buttons */
+
+            /* Hero */
+            .about-hero { padding: 120px 0 60px; }
+            .hero-title { font-size: 2.8rem; }
+
+            /* Cards Stacking */
+            .content-card, .content-card.reversed { 
+                grid-template-columns: 1fr; /* Stack strictly */
+                direction: ltr !important; /* Reset direction */
+                border-radius: 20px;
+                height: auto;
+            }
             
-            .content-card, .content-card.reversed { grid-template-columns: 1fr; direction: ltr; border-radius: 20px; }
-            .card-text { padding: 40px 25px; }
-            .card-title { font-size: 2.2rem; }
-            .card-image-wrapper, .journey-graphic { min-height: 300px; height: 300px; }
+            /* Order: Image on Top, Text Below */
+            .card-image-wrapper { order: 1; min-height: 250px; height: 250px; }
+            .card-text { order: 2; padding: 40px 25px; align-items: flex-start; text-align: left; }
+            
+            .card-title { font-size: 2.2rem; margin-bottom: 15px; }
+            .card-desc { font-size: 1rem; margin-bottom: 30px; }
+            
+            /* Journey Graphic */
+            .journey-graphic { min-height: 250px; height: 250px; }
             .journey-graphic h2 { font-size: 2.5rem; }
-            
-            .footer-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+
+            /* Footer */
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
         }
     </style>
 </head>
@@ -129,7 +148,10 @@
                 <a href="index.html#home" class="logo">
                     <img src="assets/Shape Wellness Logo Final.png" alt="Shape Wellness" class="logo-img">
                 </a>
-                <div class="nav-links">
+                <div class="mobile-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="nav-links" id="navLinks">
                     <a href="index.html#home">Home</a>
                     <a href="experience.html">Experience</a>
                     <a href="index.html#clinical">Treatments</a>
@@ -153,7 +175,7 @@
             <div class="content-card">
                 <div class="card-text">
                     <h2 class="card-title">Enhancing Your <br><span style="color:var(--primary-orange)">Well-being</span></h2>
-                    <p class="card-desc">At Shape Wellness, we are dedicated to providing a first-of-its-kind experience in slimming, skin, and hair care in Chennai Kolapakkam. Our tailored services cater to both men and women seeking weight loss solutions, skin rejuvenation, and hair care treatments.</p>
+                    <p class="card-desc">At Shape Wellness, we are dedicated to providing a first-of-its-kind experience in slimming, skin, and hair care in Chennai Kolapakkam. Our tailored services cater to both men and women.</p>
                     <a href="#" class="btn-outline">Learn More</a>
                 </div>
                 <div class="card-image-wrapper">
@@ -168,7 +190,7 @@
             <div class="content-card reversed">
                 <div class="card-text">
                     <h2 class="card-title">Our Journey</h2>
-                    <p class="card-desc">Shape Wellness has a rich history of transforming lives through our innovative slimming, skin, and hair care solutions. Since our inception, we have been at the forefront of delivering exceptional services that have set us apart as pioneers in the industry.</p>
+                    <p class="card-desc">Shape Wellness has a rich history of transforming lives through our innovative slimming, skin, and hair care solutions. Since our inception, we have been at the forefront of delivering exceptional services.</p>
                     <a href="#" class="btn-outline">Discover Now</a>
                 </div>
                 <div class="card-image-wrapper">
@@ -187,7 +209,7 @@
                 <div class="card-text">
                     <span style="text-transform: uppercase; letter-spacing: 2px; font-weight: 700; color: #888; font-size: 0.9rem; margin-bottom: 10px; display:block;">Core Values</span>
                     <h2 class="card-title">Our Beliefs</h2>
-                    <p class="card-desc">At Shape Wellness, our philosophy revolves around empowering individuals to embrace their unique beauty and wellness journey. We believe in holistic approaches that combine advanced technology with personalized care to achieve transformative results.</p>
+                    <p class="card-desc">Our philosophy revolves around empowering individuals to embrace their unique beauty. We believe in holistic approaches that combine advanced technology with personalized care.</p>
                     <a href="#" class="btn-outline">Explore</a>
                 </div>
                 <div class="card-image-wrapper">
@@ -242,6 +264,10 @@
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
     </script>
 </body>
 </html>

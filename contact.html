@@ -36,39 +36,39 @@
         .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
         nav { display: flex; justify-content: space-between; align-items: center; }
         .logo-img { height: 50px; width: auto; display: block; }
-        .nav-links { display: flex; gap: 50px; }
+        
+        .nav-links { display: flex; gap: 40px; align-items: center; }
         .nav-links a { font-weight: 500; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary-orange); }
-        .btn-appoint { background-color: var(--text-dark); color: var(--white); padding: 15px 35px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.4s var(--easing); }
+        
+        .btn-appoint { background-color: var(--text-dark); color: var(--white); padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.4s var(--easing); }
         .btn-appoint:hover { background-color: var(--primary-orange); transform: scale(1.05); }
+
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-dark); }
 
         /* --- CONTACT PAGE STYLES --- */
         .page-padding { padding: 140px 0 100px; }
 
-        /* Intro Text Section */
         .intro-section { text-align: center; margin-bottom: 80px; }
         .intro-title { font-size: 4rem; margin-bottom: 30px; color: var(--text-dark); }
         .intro-text { font-size: 1.2rem; color: var(--text-light); max-width: 900px; margin: 0 auto; line-height: 1.8; }
 
-        /* Map Section */
         .location-header-btn {
             background-color: var(--primary-orange); 
             color: white; padding: 15px 40px; border-radius: 50px; font-weight: 700; font-size: 1.2rem;
             display: table; margin: 0 auto 40px auto; box-shadow: 0 5px 15px rgba(242, 101, 34, 0.3);
         }
+        
         .contact-split-layout {
             display: grid; grid-template-columns: 1fr 1fr; gap: 0; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
-            border-radius: 20px; overflow: hidden; margin-bottom: 120px;
-            /* NEW: Border Transition */
-            border: 2px solid transparent;
-            transition: border-color 0.4s;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-radius: 20px; overflow: hidden; margin-bottom: 120px;
+            border: 2px solid transparent; transition: border-color 0.4s;
         }
-        /* NEW: Hover Effect */
         .contact-split-layout:hover { border-color: var(--primary-orange); }
 
         .map-container iframe { width: 100%; height: 100%; min-height: 600px; border: none; }
         .contact-info-container { background: var(--bg-off-white); display: flex; flex-direction: column; }
+        
         .contact-header-image {
             width: 100%; height: 250px; background-image: url('assets/2025-09-21.webp');
             background-size: cover; background-position: center; position: relative;
@@ -82,7 +82,7 @@
         .contact-details-list li { display: flex; align-items: flex-start; margin-bottom: 35px; font-size: 1.1rem; color: var(--text-dark); }
         .contact-icon-wrapper { margin-right: 20px; color: var(--primary-orange); font-size: 1.4rem; padding-top: 4px; }
 
-        /* --- NEW BOOKING SECTION --- */
+        /* --- BOOKING SECTION --- */
         .booking-section { background: var(--white); padding-bottom: 100px; }
         .booking-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
         .booking-content h2 { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.2; }
@@ -91,11 +91,8 @@
         .inline-booking-box {
             background: var(--bg-off-white); padding: 50px; border-radius: 30px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-            /* NEW: Border Transition */
-            border: 2px solid transparent;
-            transition: border-color 0.4s, transform 0.4s;
+            border: 2px solid transparent; transition: border-color 0.4s, transform 0.4s;
         }
-        /* NEW: Hover Effect */
         .inline-booking-box:hover { border-color: var(--primary-orange); transform: translateY(-5px); }
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -120,17 +117,40 @@
         .footer-links a:hover { color: var(--primary-orange); transform: translateX(5px); }
         .copyright { text-align: center; border-top: 1px solid #333; padding-top: 30px; color: #555; }
 
-        /* --- MOBILE --- */
+        /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .intro-title { font-size: 3rem; }
-            .contact-split-layout { grid-template-columns: 1fr; }
-            .map-container iframe { min-height: 350px; }
+            .container { padding: 0 20px; }
+            
+            /* Nav */
+            .mobile-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 70px; left: 0; width: 100%; background: white;
+                flex-direction: column; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                display: none;
+            }
+            .nav-links.active { display: flex; }
+            .btn-appoint { display: none; }
+
+            /* Intro */
+            .page-padding { padding: 120px 0 60px; }
+            .intro-title { font-size: 2.8rem; }
+            .intro-text { font-size: 1rem; }
+            
+            /* Stacking Grids */
+            .contact-split-layout { grid-template-columns: 1fr; margin-bottom: 60px; }
+            .map-container iframe { min-height: 300px; }
+            .contact-header-image { height: 180px; }
+            .brand-overlay-text { font-size: 2.2rem; }
+            
+            /* Booking */
             .booking-layout { grid-template-columns: 1fr; gap: 40px; }
-            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
-            .inline-booking-box { padding: 30px; }
-            .form-grid { grid-template-columns: 1fr; }
+            .booking-content h2 { font-size: 2.2rem; }
+            .inline-booking-box { padding: 30px 20px; }
+            .form-grid { grid-template-columns: 1fr; gap: 0; }
             .full-width { grid-column: span 1; }
+            
+            /* Footer */
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
         }
     </style>
 </head>
@@ -142,12 +162,14 @@
                 <a href="index.html#home" class="logo">
                     <img src="assets/Shape Wellness Logo Final.png" alt="Shape Wellness" class="logo-img">
                 </a>
-                <div class="nav-links">
+                <div class="mobile-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="nav-links" id="navLinks">
                     <a href="index.html#home">Home</a>
-                    
-                    
-                    <a href="index.html#clinical">Treatments</a>
+                    <a href="index.html#signature">Signature</a>
                     <a href="experience.html">Experience</a>
+                    <a href="index.html#clinical">Treatments</a>
                     <a href="about.html">About Us</a>
                     <a href="#" class="active">Contact</a>
                 </div>
@@ -158,11 +180,10 @@
 
     <section class="contact-page-section page-padding">
         <div class="container">
-            
             <div class="intro-section">
                 <h1 class="intro-title">Get in Touch</h1>
                 <p class="intro-text">
-                    Shape Wellness is a premier slimming, skin, and hair clinic located in Chennai Kolapakkam. We cater to both men and women seeking weight loss solutions, skin care treatments, and hair care services. Our clinic is dedicated to providing top-notch services tailored to your specific needs.
+                    Shape Wellness is a premier slimming, skin, and hair clinic located in Chennai Kolapakkam. We cater to both men and women seeking weight loss solutions, skin care treatments, and hair care services.
                 </p>
             </div>
 
@@ -187,33 +208,24 @@
                     <ul class="contact-details-list">
                         <li>
                             <div class="contact-icon-wrapper"><i class="fas fa-phone-alt"></i></div>
-                            <div>
-                                <strong>Call Us:</strong><br>
-                                +91 9500 559 119
-                            </div>
+                            <div><strong>Call Us:</strong><br>+91 9500 559 119</div>
                         </li>
                         <li>
                             <div class="contact-icon-wrapper"><i class="far fa-clock"></i></div>
-                            <div>
-                                <strong>Working Hours:</strong><br>
-                                Mon - Sun, 10:30 am - 08:30 pm
-                            </div>
+                            <div><strong>Working Hours:</strong><br>Mon - Sun, 10:30 am - 08:30 pm</div>
                         </li>
                         <li>
                             <div class="contact-icon-wrapper"><i class="fas fa-map-marker-alt"></i></div>
                             <div>
                                 <strong>Address:</strong><br>
                                 No 6, Sri Mahalakshmi Nagar,<br>
-                                Manapakkam Main Rd, Mahalakshmi Nagar,<br>
-                                Kolapakkam, Chennai, Tamil Nadu 600122
+                                Manapakkam Main Rd,<br>
+                                Kolapakkam, Chennai 600122
                             </div>
                         </li>
                          <li>
                             <div class="contact-icon-wrapper"><i class="far fa-envelope"></i></div>
-                             <div>
-                                <strong>Email:</strong><br>
-                                Info@shapewellness.in
-                            </div>
+                             <div><strong>Email:</strong><br>Info@shapewellness.in</div>
                         </li>
                     </ul>
                 </div>
@@ -223,9 +235,7 @@
                 <div class="booking-layout">
                     <div class="booking-content">
                         <h2>Book an Appointment</h2>
-                        <p>
-                            To schedule an appointment or inquire about our services, please fill out the form beside. Our team will get back to you as soon as possible to assist you with your wellness journey.
-                        </p>
+                        <p>To schedule an appointment or inquire about our services, please fill out the form beside.</p>
                         <div style="width: 100px; height: 4px; background: var(--primary-orange); margin-bottom: 20px;"></div>
                         <p style="font-size: 0.9rem; color: #888;">* Required fields</p>
                     </div>
@@ -236,25 +246,15 @@
                                 <div class="input-group"><label>Full Name *</label><input type="text" id="cName" required placeholder="John Doe"></div>
                                 <div class="input-group"><label>Phone Number *</label><input type="tel" id="cPhone" required placeholder="+91 00000 00000"></div>
                                 <div class="input-group"><label>Preferred Date</label><input type="date" id="cDate" required></div>
-                                <div class="input-group"><label>Service Interest</label>
-                                    <select id="cService">
-                                        <option>Select a Service</option>
-                                        <option>Slimming / Weight Loss</option>
-                                        <option>Skin Care / Facials</option>
-                                        <option>Hair Treatment / PRP</option>
-                                        <option>Laser Hair Removal</option>
-                                        <option>Dental</option>
-                                        <option>General Inquiry</option>
-                                    </select>
-                                </div>
-                                <div class="input-group full-width"><label>Message / Concerns</label><textarea id="cMessage" placeholder="Tell us more about what you are looking for..."></textarea></div>
+                                <div class="input-group"><label>Time</label><input type="time" id="pTime" required></div>
+                                <div class="input-group full-width"><label>Service</label><select id="cService"><option>Select a Service</option><option>Slimming</option><option>Skin Care</option></select></div>
+                                <div class="input-group full-width"><label>Message</label><textarea id="cMessage" placeholder="Tell us more..."></textarea></div>
                             </div>
                             <button type="submit" class="btn-submit">Confirm Appointment Request</button>
                         </form>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -285,13 +285,7 @@
                 </div>
                 <div>
                     <h4 style="margin-bottom:20px;">Visit</h4>
-                    <p style="color:#888;">
-                        Info@shapewellness.in<br>
-                        No 6, Sri Mahalakshmi Nagar,<br>
-                        Manapakkam Main Rd,<br>
-                        Kolapakkam, Chennai 600122<br>
-                        Open Daily 10:30am - 8pm
-                    </p>
+                    <p style="color:#888;">Info@shapewellness.in<br>No 6, Sri Mahalakshmi Nagar,<br>Kolapakkam, Chennai 600122</p>
                 </div>
             </div>
             <div class="copyright">© 2026 Shape Wellness. All Rights Reserved.</div>
@@ -303,6 +297,10 @@
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
 
         function handleContactBooking(e) {
             e.preventDefault();
