@@ -88,10 +88,11 @@
             border-radius: 40px;
             padding: 60px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-            /* Ensure content clips strictly within corners */
+            /* Important: Keep wrapper static */
             overflow: hidden; 
             position: relative;
             z-index: 1;
+            width: 100%;
         }
 
         /* --- JOURNEY --- */
@@ -113,7 +114,11 @@
         
         /* --- 2. CLINICAL SERVICES --- */
         .clinical-services { padding: 80px 20px; background: var(--bg-off-white); display: flex; justify-content: center; }
-        .clinical-wrapper-card { background: var(--white); width: 100%; max-width: 1350px; border-radius: 40px; padding: 80px 0; box-shadow: 0 20px 50px rgba(0,0,0,0.03); overflow: hidden; }
+        .clinical-wrapper-card { 
+            background: var(--white); width: 100%; max-width: 1350px; border-radius: 40px; 
+            padding: 80px 0; box-shadow: 0 20px 50px rgba(0,0,0,0.03); 
+            overflow: hidden; /* Hide scrollbar on desktop */
+        }
 
         /* DESKTOP TRACKS */
         .signature-track, .clinical-track { 
@@ -199,7 +204,7 @@
                 display: none; /* Hidden by default */
             }
             .nav-links.active { display: flex; }
-            .btn-appoint { display: none; } /* Hide button in header, show in nav if needed or bottom */
+            .btn-appoint { display: none; } 
 
             /* Hero */
             .hero h1 { font-size: 2.8rem; line-height: 1.2; }
@@ -215,32 +220,30 @@
             .stats-box { flex-wrap: wrap; justify-content: space-around; gap: 30px; }
             .stat-item { text-align: center; }
 
-            /* SCROLLABLE SECTIONS MOBILE FIX */
-            /* Ensure parent card has overflow visible to allow track to scroll, 
-               OR use native scroll on card wrapper. 
-               Here we use native scroll on wrapper for simplicity. */
-            
+            /* SCROLLABLE SECTIONS MOBILE FIX - The Title Stays Static */
             .clinical-wrapper-card, #signatureWrapper { 
                 padding: 40px 0; 
                 border-radius: 20px;
-                /* Native Touch Scroll on Wrapper */
-                overflow-x: auto; 
-                -webkit-overflow-scrolling: touch; 
-                /* Ensure it stays within bounds */
-                max-width: 100%;
-                display: block; /* Ensure it's block for scrolling */
+                /* NO overflow-x here, we want header static */
+                overflow: hidden; 
             }
-
             .signature-track, .clinical-track { 
-                /* Reset transform for mobile! Crucial for stopping "going out" issues */
-                transform: none !important; 
-                width: max-content; 
-                padding: 0 20px 30px 20px; 
+                /* Enable scroll ONLY on the track */
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory; /* Optional: adds snap effect */
+                padding: 0 20px 30px 20px; /* Padding inside track for cards */
+                width: 100%;
                 gap: 20px;
+                /* IMPORTANT: Reset transform for mobile so JS doesn't move it */
+                transform: none !important; 
             }
-
-            .info-card { width: 280px; }
-            .clinical-card { width: 280px; }
+            .info-card, .clinical-card { 
+                width: 280px; 
+                flex-shrink: 0; /* Crucial: stops cards from squishing */
+                scroll-snap-align: start;
+            }
+            
             .section-title { font-size: 2.5rem; }
 
             /* Reviews */
