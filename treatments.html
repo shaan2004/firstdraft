@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treatments & Technologies | Shape Wellness</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- BRAND VARIABLES --- */
+        :root {
+            --primary-orange: #F26522; 
+            --text-dark: #1a1a1a;
+            --text-light: #555;
+            --white: #FFFFFF;
+            --bg-off-white: #fcf9f7;
+            --card-inner-bg: #f9f9f9;
+            --footer-bg: #0F0F0F;
+            --easing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* --- GLOBAL RESET --- */
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Manrope', sans-serif; line-height: 1.6; color: var(--text-dark); background: var(--bg-off-white); overflow-x: hidden; }
+        h1, h2, h3, .logo, .section-title, .card-title { font-family: 'Playfair Display', serif; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- HEADER --- */
+        header { position: fixed; width: 100%; top: 0; z-index: 1000; padding: 15px 0; transition: 0.3s; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo-img { height: 60px; width: auto; display: block; object-fit: contain; }
+        
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-orange); }
+        
+        .btn-appoint { background-color: var(--text-dark); color: var(--white); padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.4s var(--easing); }
+        .btn-appoint:hover { background-color: var(--primary-orange); transform: scale(1.05); }
+
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-dark); }
+
+        /* --- HERO --- */
+        .page-hero { padding: 180px 0 80px; text-align: center; background: var(--bg-off-white); }
+        .hero-subtitle { font-size: 1rem; color: var(--primary-orange); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; display: block; margin-bottom: 20px; }
+        .hero-title { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .hero-desc { font-size: 1.2rem; color: var(--text-light); max-width: 700px; margin: 0 auto; }
+
+        /* --- TREATMENT GRID SECTION --- */
+        .treatment-section { padding: 60px 0 120px; }
+        
+        .treatment-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 40px; 
+        }
+
+        /* TREATMENT CARD STYLE */
+        .treatment-card {
+            background: var(--white);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            border: 2px solid transparent;
+            transition: transform 0.4s var(--easing), box-shadow 0.4s var(--easing), border-color 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .treatment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border-color: var(--primary-orange);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s var(--easing);
+        }
+
+        .treatment-card:hover .card-img { transform: scale(1.05); }
+
+        .card-content { padding: 40px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-category { font-size: 0.8rem; text-transform: uppercase; color: var(--primary-orange); font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+        .card-title { font-size: 2rem; margin-bottom: 15px; color: var(--text-dark); line-height: 1.2; }
+        .card-text { font-size: 1rem; color: var(--text-light); line-height: 1.7; margin-bottom: 30px; flex-grow: 1; }
+        
+        .btn-card-link {
+            font-weight: 700; color: var(--text-dark); text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;
+            display: inline-flex; align-items: center; transition: color 0.3s;
+        }
+        .btn-card-link i { margin-left: 8px; font-size: 0.8rem; transition: transform 0.3s; }
+        .treatment-card:hover .btn-card-link { color: var(--primary-orange); }
+        .treatment-card:hover .btn-card-link i { transform: translateX(5px); }
+
+
+        /* --- FOOTER --- */
+        footer { background-color: var(--footer-bg); color: var(--white); padding: 100px 0 30px 0; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 80px; }
+        .footer-logo { font-size: 2.5rem; margin-bottom: 20px; display: block; }
+        .footer-links a { display: block; color: #888; margin-bottom: 12px; font-size: 1.1rem; transition: 0.3s; }
+        .footer-links a:hover { color: var(--primary-orange); transform: translateX(5px); }
+        .copyright { text-align: center; border-top: 1px solid #333; padding-top: 30px; color: #555; }
+
+        /* --- MODAL --- */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-box { background: white; width: 900px; max-width: 95%; border-radius: 4px; display: flex; overflow: hidden; position: relative; animation: slideUp 0.4s var(--easing); }
+        .modal-image { width: 40%; background: url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=600&q=80') center/cover; }
+        .modal-form { width: 60%; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; color: #999; z-index: 10; }
+        .close-btn:hover { color: var(--primary-orange); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; color: #888; text-transform: uppercase; }
+        .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 12px; background: #f8f8f8; border: 1px solid #eee; font-family: 'Manrope'; outline: none; transition: 0.3s; }
+        .input-group input:focus { border-color: var(--primary-orange); background: white; }
+        .full-width { grid-column: span 2; }
+        textarea { resize: none; height: 80px; }
+        .success-message { display: none; text-align: center; width: 100%; padding: 40px; }
+        .appoint-details { background: #f9f9f9; padding: 20px; margin-top: 20px; text-align: left; border-left: 4px solid var(--primary-orange); }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .container { padding: 0 20px; }
+            
+            /* Nav */
+            .mobile-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 80px; left: 0; width: 100%; background: white;
+                flex-direction: column; align-items: center; padding: 30px; 
+                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                display: none;
+            }
+            .nav-links.active { display: flex; }
+            .btn-appoint { display: none; }
+
+            /* Hero */
+            .page-hero { padding: 120px 0 60px; }
+            .hero-title { font-size: 2.8rem; }
+            
+            /* Grid */
+            .treatment-grid { grid-template-columns: 1fr; gap: 40px; }
+            .card-img-container { height: 250px; }
+            .card-content { padding: 30px 25px; }
+
+            /* Footer */
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+
+            /* Modal */
+            .modal-box { flex-direction: column; width: 95%; max-height: 90vh; overflow-y: auto; }
+            .modal-image { display: none; }
+            .modal-form { width: 100%; padding: 30px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="index.html#home" class="logo">
+                    <img src="assets/Shape Wellness Logo Final.png" alt="Shape Wellness" class="logo-img">
+                </a>
+                <div class="mobile-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html#home">Home</a>
+                    <a href="experience.html">Experience</a>
+                    <a href="treatments.html" class="active">Treatments</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <button class="btn-appoint" onclick="openModal()">Book Appointment</button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <span class="hero-subtitle">Our Expertise</span>
+            <h1 class="hero-title">Advanced Treatments & <br> Technologies</h1>
+            <p class="hero-desc">Discover our comprehensive range of aesthetic solutions, powered by cutting-edge technology and performed by certified experts.</p>
+        </div>
+    </section>
+
+    <section class="treatment-section">
+        <div class="container">
+            <div class="treatment-grid">
+                
+                <div class="treatment-card">
+                    <div class="card-img-container">
+                        <div class="card-img" style="background-image: url('assets/prp.png');"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Skin Rejuvenation</span>
+                        <h3 class="card-title">PRP Skin Therapy</h3>
+                        <p class="card-text">Platelet-Rich Plasma (PRP) therapy utilizes your body's own growth factors to stimulate collagen production, reduce fine lines, and improve skin texture for a natural glow.</p>
+                        <a href="#" class="btn-card-link" onclick="openModal()">Book Consultation <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="treatment-card">
+                    <div class="card-img-container">
+                        <div class="card-img" style="background-image: url('assets/needling.png');"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Skin Restoration</span>
+                        <h3 class="card-title">Micro Needling</h3>
+                        <p class="card-text">A minimally invasive procedure that treats acne scars, enlarged pores, and wrinkles by triggering the skin's natural repair process using fine sterile needles.</p>
+                        <a href="#" class="btn-card-link" onclick="openModal()">Book Consultation <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="treatment-card">
+                    <div class="card-img-container">
+                        <div class="card-img" style="background-image: url('assets/whitening.png');"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Complexion</span>
+                        <h3 class="card-title">Skin Whitening</h3>
+                        <p class="card-text">Advanced pigmentation correction treatments designed to even out skin tone, reduce sun spots, and restore radiance to dull or pigmented skin.</p>
+                        <a href="#" class="btn-card-link" onclick="openModal()">Book Consultation <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="treatment-card">
+                    <div class="card-img-container">
+                        <div class="card-img" style="background-image: url('assets/laser.png');"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Laser Technology</span>
+                        <h3 class="card-title">Laser Hair Removal</h3>
+                        <p class="card-text">Experience pain-free, long-lasting hair reduction using state-of-the-art diode laser technology suitable for all skin types.</p>
+                        <a href="#" class="btn-card-link" onclick="openModal()">Book Consultation <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="treatment-card">
+                    <div class="card-img-container">
+                        <div class="card-img" style="background-image: url('assets/acne.png');"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Dermatology</span>
+                        <h3 class="card-title">Acne Treatment</h3>
+                        <p class="card-text">Customized chemical peels and medical facials to target active acne, reduce inflammation, and minimize post-acne scarring.</p>
+                        <a href="#" class="btn-card-link" onclick="openModal()">Book Consultation <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="treatment-card">
+                    <div class="card-img-container">
+                        <div class="card-img" style="background-image: url('assets/body.png');"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Body Sculpting</span>
+                        <h3 class="card-title">Body Contouring</h3>
+                        <p class="card-text">Non-invasive fat reduction technologies like CoolSculpting and RF therapy to shape, tone, and firm stubborn areas without surgery.</p>
+                        <a href="#" class="btn-card-link" onclick="openModal()">Book Consultation <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                 <div class="treatment-card">
+                    <div class="card-img-container">
+                        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=800&q=80');"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Smile Care</span>
+                        <h3 class="card-title">Dental Aesthetics</h3>
+                        <p class="card-text">Comprehensive dental solutions including teeth whitening, veneers, and smile designing to perfect your smile.</p>
+                        <a href="#" class="btn-card-link" onclick="openModal()">Book Consultation <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="treatment-card">
+                    <div class="card-img-container">
+                        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=800&q=80');"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">Special Occasion</span>
+                        <h3 class="card-title">Bridal Packages</h3>
+                        <p class="card-text">Curated pre-bridal packages including full body polishing, glow facials, and hair spa to make you shine on your big day.</p>
+                        <a href="#" class="btn-card-link" onclick="openModal()">Book Consultation <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer-main">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <img src="assets/Shape Wellness Logo Final.png" alt="Shape Wellness" class="logo-img" style="height: 50px; margin-bottom: 20px;">
+                    <p style="color:#666;">Redefining beauty standards through science.</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom:20px;">Menu</h4>
+                    <div class="footer-links">
+                        <a href="index.html#home">Home</a>
+                        <a href="experience.html">Experience</a>
+                        <a href="treatments.html">Treatments</a>
+                        <a href="about.html">About Us</a>
+                        <a href="contact.html">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom:20px;">Social</h4>
+                    <div class="footer-links">
+                        <a href="https://www.instagram.com/shapewellness.chennai/#" target="_blank">Instagram</a>
+                        <a href="https://www.threads.com/@shapewellness.chennai?xmt=AQF09m6VX1OBBPvAyk-d45R1SytIbNAvjjGAlX40SLqbrak" target="_blank">Threads</a>
+                        <a href="https://www.facebook.com/profile.php?id=61578854806823#" target="_blank">Facebook</a>
+                        <a href="https://wa.me/919500559119" target="_blank">WhatsApp</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom:20px;">Visit</h4>
+                    <p style="color:#888;">
+                        Info@shapewellness.in<br>
+                        No 6, Sri Mahalakshmi Nagar,<br>
+                        Manapakkam Main Rd,<br>
+                        Kolapakkam, Chennai 600122<br>
+                        Open Daily 10:30am - 8pm
+                    </p>
+                </div>
+            </div>
+            <div class="copyright">© 2026 Shape Wellness. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-image"></div>
+            <div class="modal-form" id="modalFormSection">
+                <h2 style="font-family:'Playfair Display'; margin-bottom:5px;">Book Appointment</h2>
+                <p style="color:#888; font-size:0.9rem; margin-bottom:25px;">Complete the form to schedule your visit.</p>
+                <form onsubmit="handleBooking(event)">
+                    <div class="form-grid">
+                        <div class="input-group"><label>Name</label><input type="text" id="pName" required></div>
+                        <div class="input-group"><label>Phone</label><input type="tel" id="pPhone" required></div>
+                        <div class="input-group"><label>Date</label><input type="date" id="pDate" required></div>
+                        <div class="input-group"><label>Time</label><input type="time" id="pTime" required></div>
+                        <div class="input-group full-width"><label>Service</label><select id="pService"><option>Slimming</option><option>Skin Care</option><option>Hair Restoration</option><option>Laser Tech</option><option>Dental Aesthetics</option><option>Bridal Studio</option></select></div>
+                        <div class="input-group full-width"><label>Message</label><textarea id="pMessage" placeholder="Any specific concerns?"></textarea></div>
+                    </div>
+                    <button class="btn-appoint" style="width:100%; margin-top:10px;">Confirm Booking</button>
+                </form>
+            </div>
+            <div class="success-message" id="successSection">
+                <i class="fas fa-check-circle" style="font-size:50px; color:var(--primary-orange); margin-bottom:20px;"></i>
+                <h2 style="font-family:'Playfair Display'">Appointment Confirmed!</h2>
+                <p style="color:#666;">Thank you. Your consultation is booked.</p>
+                <div class="appoint-details">
+                    <p><strong>ID:</strong> <span id="confId" style="color:var(--primary-orange)"></span></p>
+                    <p><strong>Date:</strong> <span id="confDate"></span></p>
+                    <p><strong>Time:</strong> <span id="confTime"></span></p>
+                    <p><strong>Service:</strong> <span id="confService"></span></p>
+                </div>
+                <button class="btn-appoint" onclick="closeModal()" style="margin-top:20px;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        const sr = ScrollReveal({
+            origin: 'bottom',
+            distance: '60px',
+            duration: 1000,
+            delay: 200,
+            easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            reset: false
+        });
+
+        sr.reveal('.hero-title, .hero-subtitle, .hero-desc');
+        sr.reveal('.treatment-card', { interval: 100 });
+        sr.reveal('.footer-grid div', { interval: 100, origin: 'bottom', distance: '30px' });
+
+        function openModal() { document.getElementById('bookingModal').style.display = 'flex'; document.getElementById('modalFormSection').style.display = 'flex'; document.getElementById('successSection').style.display = 'none'; }
+        function closeModal() { document.getElementById('bookingModal').style.display = 'none'; }
+        function handleBooking(e) { 
+            e.preventDefault(); 
+            document.getElementById('modalFormSection').style.display = 'none'; 
+            document.getElementById('successSection').style.display = 'block'; 
+            document.getElementById('confId').innerText = "#SW"+Math.floor(Math.random()*9000);
+            document.getElementById('confDate').innerText = document.getElementById('pDate').value;
+            document.getElementById('confTime').innerText = document.getElementById('pTime').value;
+            document.getElementById('confService').innerText = document.getElementById('pService').value;
+        }
+    </script>
+</body>
+</html>
