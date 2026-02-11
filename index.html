@@ -88,11 +88,11 @@
             border-radius: 40px;
             padding: 60px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-            width: 100%; 
+            /* Important: Keep wrapper static */
+            overflow: hidden; 
             position: relative;
             z-index: 1;
-            /* Static container, does NOT scroll itself */
-            overflow: hidden; 
+            width: 100%;
         }
 
         /* --- JOURNEY --- */
@@ -106,23 +106,22 @@
         .stat-item h3 { font-size: 3rem; color: var(--primary-orange); line-height: 1; margin-bottom: 5px; }
         .stat-item span { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; }
 
-        /* --- SCROLLABLE SECTIONS (Common Styles) --- */
+        /* --- 1. SIGNATURE THERAPIES --- */
         .services { padding: 100px 0; background: var(--bg-off-white); display: flex; justify-content: center; }
-        .clinical-services { padding: 80px 20px; background: var(--bg-off-white); display: flex; justify-content: center; }
-        
         .section-header { text-align: center; margin-bottom: 60px; }
         .section-title { font-size: 4rem; margin-bottom: 10px; }
         .section-subtitle { font-size: 1.2rem; color: var(--primary-orange); letter-spacing: 2px; text-transform: uppercase; }
         
+        /* --- 2. CLINICAL SERVICES --- */
+        .clinical-services { padding: 80px 20px; background: var(--bg-off-white); display: flex; justify-content: center; }
         .clinical-wrapper-card { 
             background: var(--white); width: 100%; max-width: 1350px; border-radius: 40px; 
             padding: 80px 0; box-shadow: 0 20px 50px rgba(0,0,0,0.03); 
-            /* Static Container */
+            /* Static Wrapper */
             overflow: hidden; 
         }
 
-        /* --- THE SCROLL TRACK (Desktop) --- */
-        /* On desktop, we likely want animation or simple flex. */
+        /* DESKTOP TRACKS */
         .signature-track, .clinical-track { 
             display: flex; gap: 40px; 
             padding: 40px 40px 20px 40px; 
@@ -130,7 +129,7 @@
             will-change: transform; transition: transform 0.1s linear; 
         }
 
-        /* --- CARDS (Desktop) --- */
+        /* CARDS */
         .info-card {
             background: #f5f5f5; border-radius: 0px; 
             width: 400px; flex-shrink: 0;
@@ -138,9 +137,7 @@
             transition: transform 0.4s var(--easing), box-shadow 0.4s, border-color 0.4s;
             border: 2px solid transparent;
         }
-        /* Hover Effect */
         .info-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-color: var(--primary-orange); }
-        
         .card-icon { font-size: 3rem; margin-bottom: 20px; color: var(--text-dark); }
         .info-card h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--text-dark); }
         .info-card p { color: var(--text-light); font-size: 1rem; line-height: 1.6; }
@@ -150,9 +147,7 @@
             transition: transform 0.4s var(--easing), box-shadow 0.4s, border-color 0.4s; 
             position: relative; border: 2px solid transparent; 
         }
-        /* Hover Effect */
         .clinical-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.05); border-color: var(--primary-orange); }
-        
         .clinical-img { height: 250px; width: 100%; background-size: cover; background-position: center; }
         .clinical-info { padding: 30px; }
         .clinical-info h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--text-dark); }
@@ -228,39 +223,37 @@
             .stat-item { text-align: center; }
 
             /* SCROLLABLE SECTIONS MOBILE FIX */
-            /* 1. Ensure the PARENT doesn't scroll */
+            /* 1. Wrapper stays static (title doesn't move) */
             .clinical-wrapper-card, #signatureWrapper { 
                 padding: 40px 0; 
                 border-radius: 20px;
-                overflow: hidden; /* Static content stays still */
+                overflow: hidden; 
             }
 
-            /* 2. Apply Scroll ONLY to the TRACK */
+            /* 2. Track scrolls, with padding-top to stop clipping under title */
             .signature-track, .clinical-track { 
                 display: flex;
-                flex-wrap: nowrap; /* Forces horizontal line */
-                overflow-x: auto; /* Allow scrolling here */
-                -webkit-overflow-scrolling: touch; /* Smooth iOS scroll */
-                
-                /* Reset desktop transform logic */
-                transform: none !important; 
+                overflow-x: auto;
+                scroll-snap-type: x mandatory; 
+                padding: 40px 20px 30px 20px; 
                 width: 100%;
-                
-                padding: 40px 20px 30px 20px; /* Padding for hover effect */
                 gap: 20px;
-                
-                /* Hide scrollbar */
-                scrollbar-width: none; 
-                -ms-overflow-style: none;
+                transform: none !important; 
+                /* IMPORTANT: Ensure items align start */
+                justify-content: flex-start;
             }
+            
             .signature-track::-webkit-scrollbar, .clinical-track::-webkit-scrollbar { display: none; }
 
-            /* 3. Fix Card Width so they don't squash */
+            /* 3. VITAL: FORCE CARD VISIBILITY ON MOBILE & FIX WIDTH */
             .info-card, .clinical-card { 
-                flex: 0 0 auto; /* Don't shrink! */
+                flex: 0 0 auto; 
                 width: 280px; 
-                /* Enable hover on tap */
-                transition: transform 0.3s;
+                scroll-snap-align: start;
+                /* OVERRIDE SCROLLREVEAL JS STYLES */
+                opacity: 1 !important; 
+                visibility: visible !important;
+                transform: none !important;
             }
             
             .section-title { font-size: 2.5rem; }
@@ -538,9 +531,12 @@
         sr.reveal('.journey-img-wrapper', { origin: 'right' });
         sr.reveal('.section-header, .section-title');
         
-        // Staggered reveals for grid items
-        sr.reveal('.info-card', { interval: 100 });
-        sr.reveal('.clinical-card', { interval: 100 });
+        // CONDITIONAL REVEAL: Only animate horizontal cards on desktop (>900px)
+        if (window.innerWidth > 900) {
+            sr.reveal('.info-card', { interval: 100 });
+            sr.reveal('.clinical-card', { interval: 100 });
+        }
+        
         sr.reveal('.review-card-outline', { interval: 100 });
         sr.reveal('.footer-grid div', { interval: 100, origin: 'bottom', distance: '30px' });
 
