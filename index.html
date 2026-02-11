@@ -52,15 +52,12 @@
         
         .logo-img { height: 60px; width: auto; display: block; object-fit: contain; }
         
-        /* Desktop Nav */
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a { font-weight: 500; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
         .nav-links a:hover { color: var(--primary-orange); }
-        
         .btn-appoint { background-color: var(--text-dark); color: var(--white); padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: 0.4s var(--easing); }
         .btn-appoint:hover { background-color: var(--primary-orange); transform: scale(1.05); }
 
-        /* Mobile Menu Toggle */
         .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-dark); }
 
         /* --- HERO --- */
@@ -91,8 +88,9 @@
             border-radius: 40px;
             padding: 60px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-            /* Important for keeping content inside on mobile */
+            /* Important: Keep wrapper static */
             width: 100%; 
+            position: relative;
         }
 
         /* --- JOURNEY --- */
@@ -115,15 +113,19 @@
         .clinical-wrapper-card { 
             background: var(--white); width: 100%; max-width: 1350px; border-radius: 40px; 
             padding: 80px 0; box-shadow: 0 20px 50px rgba(0,0,0,0.03); 
-            overflow: hidden; /* Hide default scrollbar, allow JS/CSS handling */
         }
 
         /* The Tracks that scroll */
         .signature-track, .clinical-track { 
             display: flex; gap: 40px; padding: 20px 40px; 
-            width: max-content; /* Force horizontal layout */
-            will-change: transform; transition: transform 0.1s linear; 
+            width: 100%; /* Fill container */
+            overflow-x: auto; /* Enable Scroll HERE */
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            /* Hide scrollbar */
+            scrollbar-width: none; 
         }
+        .signature-track::-webkit-scrollbar, .clinical-track::-webkit-scrollbar { display: none; }
 
         /* Signature Cards */
         .info-card {
@@ -203,7 +205,7 @@
                 display: none; /* Hidden by default */
             }
             .nav-links.active { display: flex; }
-            .btn-appoint { display: none; } /* Hide button in header, show in nav if needed or bottom */
+            .btn-appoint { display: none; } 
 
             /* Hero */
             .hero h1 { font-size: 2.8rem; line-height: 1.2; }
@@ -219,21 +221,28 @@
             .stats-box { flex-wrap: wrap; justify-content: space-around; gap: 30px; }
             .stat-item { text-align: center; }
 
-            /* Horizontal Scroll Areas */
+            /* SCROLLABLE SECTIONS MOBILE */
             .clinical-wrapper-card, #signatureWrapper { 
                 padding: 40px 0; 
                 border-radius: 20px;
-                /* Enable Native Touch Scroll */
-                overflow-x: auto; 
-                -webkit-overflow-scrolling: touch; 
+                /* NO overflow-x here, we want header static */
+                overflow: hidden; 
             }
             .signature-track, .clinical-track { 
-                width: max-content; 
-                padding: 0 20px 20px 20px; 
+                /* Enable scroll ONLY on the track */
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory; /* Optional: adds snap effect */
+                padding: 0 20px 30px 20px; /* Padding inside track for cards */
+                width: 100%;
                 gap: 20px;
             }
-            .info-card { width: 280px; }
-            .clinical-card { width: 280px; }
+            .info-card, .clinical-card { 
+                width: 280px; 
+                flex-shrink: 0; /* Crucial: stops cards from squishing */
+                scroll-snap-align: start;
+            }
+            
             .section-title { font-size: 2.5rem; }
 
             /* Reviews */
