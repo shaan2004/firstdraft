@@ -121,15 +121,12 @@
             overflow: hidden; 
         }
 
-        /* --- DESKTOP TRACKS (UPDATED CSS) --- */
+        /* --- DESKTOP TRACKS --- */
         .signature-track, .clinical-track { 
-            display: flex; 
-            gap: 40px; 
-            padding: 40px; 
-            width: fit-content;   /* FIXED: Allows content to define width */
-            min-width: 100%;      /* Ensures it fills container at minimum */
-            will-change: transform; 
-            transition: transform 0.1s linear; 
+            display: flex; gap: 40px; 
+            padding: 40px 40px 20px 40px; 
+            width: max-content; 
+            will-change: transform; transition: transform 0.1s linear; 
         }
 
         /* CARDS */
@@ -226,38 +223,41 @@
             .stat-item { text-align: center; }
 
             /* SCROLLABLE SECTIONS MOBILE FIX */
-            /* 1. Wrapper stays static (title doesn't move) */
+            /* Wrapper stays static (title doesn't move) */
             .clinical-wrapper-card, #signatureWrapper { 
                 padding: 40px 0; 
                 border-radius: 20px;
                 overflow: hidden; 
             }
 
-            /* 2. Track scrolls, with padding-top to stop clipping under title */
+            /* Track scrolls */
             .signature-track, .clinical-track { 
                 display: flex;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory; 
-                padding: 40px 20px 30px 20px; 
+                padding: 40px 20px 30px 20px; /* Padding for hover effect */
                 width: 100%;
                 gap: 20px;
-                /* Reset transform so cards don't float off on mobile */
-                transform: none !important; 
-                flex-wrap: nowrap; /* Force single line */
-                justify-content: flex-start; /* Align left */
+                transform: none !important; /* Reset desktop transform */
+                flex-wrap: nowrap; /* FORCE SINGLE LINE */
+                justify-content: flex-start;
             }
             
+            /* HIDE SCROLLBAR */
             .signature-track::-webkit-scrollbar, .clinical-track::-webkit-scrollbar { display: none; }
 
-            /* 3. VITAL: FORCE CARD VISIBILITY ON MOBILE & FIX WIDTH */
+            /* CARDS: Force Min-Width so they don't disappear/squash */
             .info-card, .clinical-card { 
-                flex: 0 0 auto; /* Don't shrink */
+                flex: 0 0 auto; /* Do not shrink */
                 width: 280px; 
+                min-width: 280px; /* Force minimum width */
                 scroll-snap-align: start;
-                /* OVERRIDE SCROLLREVEAL JS STYLES */
+                
+                /* FORCE VISIBILITY TO FIX "MISSING CARDS" */
                 opacity: 1 !important; 
                 visibility: visible !important;
                 transform: none !important;
+                display: block !important;
             }
             
             .section-title { font-size: 2.5rem; }
@@ -550,21 +550,16 @@
             const wrapper = document.getElementById(wrapperId);
             const track = document.getElementById(trackId);
             
-            if(wrapper && track && window.innerWidth > 900) {
-
-                wrapper.addEventListener('mousemove', (e) => {
-
-                    const wrapperRect = wrapper.getBoundingClientRect();
-                    const mouseX = e.clientX - wrapperRect.left;
-
-                    const percentage = mouseX / wrapperRect.width;
-
-                    const maxScroll = track.scrollWidth - wrapperRect.width;
-
-                    const x = percentage * maxScroll * -1;
-
-                    track.style.transform = `translateX(${x}px)`;
-                });
+            if(wrapper && track) {
+                // Only run on larger screens
+                if (window.innerWidth > 900) {
+                    wrapper.addEventListener('mousemove', (e) => {
+                        const percentage = e.clientX / window.innerWidth;
+                        const maxScroll = track.scrollWidth - window.innerWidth + 150;
+                        const x = percentage * maxScroll * -1;
+                        track.style.transform = `translateX(${x}px)`;
+                    });
+                }
             }
         }
 
