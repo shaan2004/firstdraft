@@ -88,7 +88,6 @@
             border-radius: 40px;
             padding: 60px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-            /* Important: Keep wrapper static */
             overflow: hidden; 
             position: relative;
             z-index: 1;
@@ -123,7 +122,7 @@
         /* DESKTOP TRACKS */
         .signature-track, .clinical-track { 
             display: flex; gap: 40px; 
-            /* Added padding-top: 40px to solve the clipping issue */
+            /* Added padding top to prevent cutting off on hover/scroll */
             padding: 40px 40px 20px 40px; 
             width: max-content; 
             will-change: transform; transition: transform 0.1s linear; 
@@ -222,29 +221,39 @@
             .stats-box { flex-wrap: wrap; justify-content: space-around; gap: 30px; }
             .stat-item { text-align: center; }
 
-            /* SCROLLABLE SECTIONS MOBILE FIX - The Title Stays Static */
+            /* SCROLLABLE SECTIONS MOBILE FIX */
+            /* 1. The wrapper handles the scroll area */
             .clinical-wrapper-card, #signatureWrapper { 
                 padding: 40px 0; 
                 border-radius: 20px;
-                /* NO overflow-x here, we want header static */
-                overflow: hidden; 
+                /* Allow Native Touch Scroll */
+                overflow-x: auto; 
+                -webkit-overflow-scrolling: touch; 
+                /* Prevent vertical scroll issues */
+                display: block;
             }
+
+            /* 2. The track expands to hold all items */
             .signature-track, .clinical-track { 
-                /* Enable scroll ONLY on the track */
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory; /* Optional: adds snap effect */
-                /* Added padding-top: 40px here as well for mobile consistency */
-                padding: 40px 20px 30px 20px; 
-                width: 100%;
-                gap: 20px;
-                /* IMPORTANT: Reset transform for mobile so JS doesn't move it */
+                /* Reset desktop transform */
                 transform: none !important; 
+                
+                /* Ensure track is wide enough for all cards */
+                width: max-content; 
+                
+                /* Padding for the cards */
+                padding: 0 20px 30px 20px; 
+                gap: 20px;
+                
+                /* Ensure display flex keeps them in a row */
+                display: flex;
             }
+
+            /* 3. Cards must not shrink */
             .info-card, .clinical-card { 
                 width: 280px; 
-                flex-shrink: 0; /* Crucial: stops cards from squishing */
-                scroll-snap-align: start;
+                flex-shrink: 0; /* Critical for horizontal scroll */
+                margin-top: 20px; /* Optional spacing */
             }
             
             .section-title { font-size: 2.5rem; }
@@ -462,7 +471,7 @@
 
     <div class="modal-overlay" id="bookingModal">
         <div class="modal-box">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal()">×</span>
             <div class="modal-image"></div>
             <div class="modal-form" id="modalFormSection">
                 <h2 style="font-family:'Playfair Display'; margin-bottom:5px;">Book Appointment</h2>
@@ -517,29 +526,26 @@
             reset: false
         });
 
-        // Initialize Reveals
-        sr.reveal('.hero-content, .hero h1, .hero p');
+        sr.reveal('.hero-title, .hero-subtitle');
         sr.reveal('.journey-content', { origin: 'left' });
         sr.reveal('.journey-img-wrapper', { origin: 'right' });
         sr.reveal('.section-header, .section-title');
         
-        // Staggered reveals for grid items
         sr.reveal('.info-card', { interval: 100 });
         sr.reveal('.clinical-card', { interval: 100 });
         sr.reveal('.review-card-outline', { interval: 100 });
         sr.reveal('.footer-grid div', { interval: 100, origin: 'bottom', distance: '30px' });
 
-        // PAN EFFECT FUNCTION (Restricted to Desktop)
+        // DESKTOP PAN EFFECT LOGIC (UPDATED FOR SCROLL FIX)
         function enablePanEffect(wrapperId, trackId) {
             const wrapper = document.getElementById(wrapperId);
             const track = document.getElementById(trackId);
             
             if(wrapper && track) {
-                // Only run on larger screens
                 if (window.innerWidth > 900) {
                     wrapper.addEventListener('mousemove', (e) => {
                         const percentage = e.clientX / window.innerWidth;
-                        const maxScroll = track.scrollWidth - window.innerWidth + 150;
+                        const maxScroll = track.scrollWidth - wrapper.offsetWidth; // Corrected math
                         const x = percentage * maxScroll * -1;
                         track.style.transform = `translateX(${x}px)`;
                     });
@@ -550,7 +556,7 @@
         enablePanEffect('clinicalWrapper', 'clinicalTrack');
         enablePanEffect('signatureWrapper', 'signatureTrack');
 
-        // Parallax (Restricted to Desktop)
+        // Parallax
         window.addEventListener('scroll', () => {
             const journeyImg = document.querySelector('.journey-img');
             const journeySection = document.querySelector('.journey');
