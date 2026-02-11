@@ -37,7 +37,6 @@
         .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
         nav { display: flex; justify-content: space-between; align-items: center; }
         .logo-img { height: 50px; width: auto; display: block; }
-        
         .nav-links { display: flex; gap: 40px; }
         .nav-links a { font-weight: 500; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary-orange); }
@@ -138,13 +137,15 @@
         /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 900px) {
             .container { padding: 0 20px; }
+            section { padding: 60px 0; }
             
-            /* Nav */
+            /* Header */
             .mobile-toggle { display: block; }
             .nav-links {
-                position: fixed; top: 70px; left: 0; width: 100%; background: white;
-                flex-direction: column; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-                display: none;
+                position: fixed; top: 80px; left: 0; width: 100%; background: white;
+                flex-direction: column; align-items: center; padding: 30px; 
+                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                display: none; /* Hidden by default */
             }
             .nav-links.active { display: flex; }
             .btn-appoint { display: none; }
@@ -153,7 +154,7 @@
             .page-header h1 { font-size: 2.8rem; }
             .page-header p { font-size: 1rem; }
             
-            /* Grids */
+            /* Grids to Single Column */
             .transform-grid, .icon-grid, .reviews-container, .footer-grid { grid-template-columns: 1fr; gap: 40px; }
             
             .section-center-title { font-size: 2.5rem; margin-bottom: 40px; }
@@ -161,7 +162,7 @@
             .review-form-box { padding: 30px 20px; }
             .form-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
             
-            /* Footer */
+            /* Footer Center */
             .footer-grid { text-align: center; }
         }
     </style>
@@ -371,6 +372,7 @@
     </footer>
 
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
     <script>
         // Smooth Scroll
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
@@ -381,6 +383,26 @@
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
         }
+
+        // SCROLL REVEAL CONFIGURATION
+        const sr = ScrollReveal({
+            origin: 'bottom',
+            distance: '60px',
+            duration: 1000,
+            delay: 200,
+            easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            reset: false
+        });
+
+        // Initialize Reveals
+        sr.reveal('.page-header h1, .page-header p');
+        sr.reveal('.section-center-title');
+        
+        sr.reveal('.transform-card', { interval: 100 });
+        sr.reveal('.icon-card', { interval: 100 });
+        sr.reveal('.review-card', { interval: 100 });
+        sr.reveal('.review-form-box');
+        sr.reveal('.footer-grid div', { interval: 100, origin: 'bottom', distance: '30px' });
 
         // Star Rating Logic
         function rate(val) {

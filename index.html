@@ -122,7 +122,9 @@
 
         /* DESKTOP TRACKS */
         .signature-track, .clinical-track { 
-            display: flex; gap: 40px; padding: 20px 40px; 
+            display: flex; gap: 40px; 
+            /* Added padding-top: 40px to solve the clipping issue */
+            padding: 40px 40px 20px 40px; 
             width: max-content; 
             will-change: transform; transition: transform 0.1s linear; 
         }
@@ -232,7 +234,8 @@
                 display: flex;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory; /* Optional: adds snap effect */
-                padding: 0 20px 30px 20px; /* Padding inside track for cards */
+                /* Added padding-top: 40px here as well for mobile consistency */
+                padding: 40px 20px 30px 20px; 
                 width: 100%;
                 gap: 20px;
                 /* IMPORTANT: Reset transform for mobile so JS doesn't move it */
@@ -294,7 +297,7 @@
         </div>
         <div class="overlay"></div>
         <div class="hero-content">
-            <h1>The Science of <br><em>Timeless Beauty</em></h1>
+            <h1 class="hero-title">The Science of <br><em>Timeless Beauty</em></h1>
             <p>Advanced Aesthetics • Dermatology • Laser Technology</p>
         </div>
     </section>
@@ -492,6 +495,7 @@
     </div>
 
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
     <script>
         // Smooth Scroll
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
@@ -502,6 +506,28 @@
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
         }
+
+        // SCROLL REVEAL CONFIGURATION
+        const sr = ScrollReveal({
+            origin: 'bottom',
+            distance: '60px',
+            duration: 1000,
+            delay: 200,
+            easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            reset: false
+        });
+
+        // Initialize Reveals
+        sr.reveal('.hero-content, .hero h1, .hero p');
+        sr.reveal('.journey-content', { origin: 'left' });
+        sr.reveal('.journey-img-wrapper', { origin: 'right' });
+        sr.reveal('.section-header, .section-title');
+        
+        // Staggered reveals for grid items
+        sr.reveal('.info-card', { interval: 100 });
+        sr.reveal('.clinical-card', { interval: 100 });
+        sr.reveal('.review-card-outline', { interval: 100 });
+        sr.reveal('.footer-grid div', { interval: 100, origin: 'bottom', distance: '30px' });
 
         // PAN EFFECT FUNCTION (Restricted to Desktop)
         function enablePanEffect(wrapperId, trackId) {
